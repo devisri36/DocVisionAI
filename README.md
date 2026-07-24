@@ -5,7 +5,7 @@ DocVision AI is a production-ready, portfolio-grade AI research and software eng
 
 ---
 
-## 🏛️ System Architecture
+## System Architecture
 
 ```mermaid
 graph TD
@@ -21,7 +21,7 @@ graph TD
 
 ---
 
-## 🔄 Verification & Analysis Flow
+## Verification & Analysis Flow
 
 ```mermaid
 sequenceDiagram
@@ -49,7 +49,7 @@ sequenceDiagram
 
 ---
 
-## 🌟 Core Features
+## Core Features
 
 - **Advanced Computer Vision Forensics**:
   - **Error Level Analysis (ELA)**: Computes pixel deviations from JPEG compression mismatches to highlight localized copy-pastes, text alterations, or photo swaps.
@@ -70,7 +70,7 @@ sequenceDiagram
 
 ---
 
-## 📂 Code Module Map
+## Code Module Map
 
 ```
 DocVision-AI/
@@ -101,7 +101,7 @@ DocVision-AI/
 
 ---
 
-## ⚡ Quick Start
+## Quick Start
 
 ### 1. Build and Run Local Server
 ```bash
@@ -131,7 +131,7 @@ python -m unittest discover -s tests
 
 ---
 
-## 📚 Documentation Reference Index
+## Documentation Reference Index
 
 - 📦 [Installation Guide](docs/INSTALLATION.md)
 - 🔌 [API Reference Specifications](docs/API.md)
