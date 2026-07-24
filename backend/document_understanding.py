@@ -207,6 +207,17 @@ class InformationExtractor:
                     "extraction_method": "Inconclusive"
                 }
 
+        # Regex fallback for Name when VLM is offline/unavailable
+        if "Name" not in extracted_data or extracted_data["Name"]["value"] is None:
+            name_match = re.search(r"Name:?\s+([A-Za-z\s]+?)(?=\s+(?:Date|DOB|Father|Permanent|Aadhaar|PAN|Gender|Expiry|$))", ocr_text, re.IGNORECASE)
+            if name_match:
+                name_val = name_match.group(1).strip()
+                extracted_data["Name"] = {
+                    "value": name_val,
+                    "confidence": 0.92,
+                    "extraction_method": "Regex Fallback"
+                }
+
         return extracted_data
 
     def _calculate_confidence(

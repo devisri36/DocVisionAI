@@ -157,7 +157,8 @@ class DocumentService:
                 "attention_heatmap_base64": attn_base64
             },
             "scores": scores,
-            "ocr_text": ocr_text
+            "ocr_text": ocr_text,
+            "ocr_results": ocr_results
         }
 
     def verify_document_quality(self, file_id: str) -> Dict[str, Any]:

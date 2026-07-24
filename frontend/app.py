@@ -412,10 +412,17 @@ elif "OCR" in selected_page:
             image = Image.open(io.BytesIO(st.session_state["active_image_bytes"]))
             draw = ImageDraw.Draw(image)
             
-            # Draw standard mock coordinates around recognized words
+            # Draw actual word coordinates from OCR results
             w, h = image.size
-            draw.rectangle([int(w*0.1), int(h*0.1), int(w*0.9), int(h*0.3)], outline="green", width=3)
-            draw.text((int(w*0.1), int(h*0.1) - 15), "Extracted Fields Zone", fill="green")
+            ocr_words = res.get("ocr_results", [])
+            if ocr_words:
+                for word in ocr_words:
+                    bbox = word.get("bbox")
+                    if bbox and len(bbox) == 4:
+                        draw.rectangle(bbox, outline="green", width=2)
+            else:
+                draw.rectangle([int(w*0.1), int(h*0.1), int(w*0.9), int(h*0.3)], outline="green", width=3)
+                draw.text((int(w*0.1), int(h*0.1) - 15), "Extracted Fields Zone", fill="green")
             
             st.image(image, use_container_width=True, caption="Target Field Zones mapped on page.")
 
