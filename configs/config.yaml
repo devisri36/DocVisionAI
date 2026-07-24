@@ -1,0 +1,48 @@
+project_name: "DocVision AI - Intelligent Document Understanding & Identity Verification System"
+
+paths:
+  datasets_dir: "datasets"
+  logs_dir: "logs"
+  outputs_dir: "outputs"
+  models_dir: "models"
+
+logging:
+  level: "INFO"
+  file_path: "logs/docvision.log"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+datasets:
+  funsd:
+    raw_dir: "datasets/raw/funsd"
+    download_url: "https://guillaumejaume.github.io/FUNSD/dataset.zip"
+  cord:
+    raw_dir: "datasets/raw/cord"
+    hf_dataset: "naver-clova-ix/cord-v2"
+  sroie:
+    raw_dir: "datasets/raw/sroie"
+    hf_dataset: "dalle-mini/sroie"
+  docvqa:
+    raw_dir: "datasets/raw/docvqa"
+    hf_dataset: "mavis/docvqa"
+    sample_limit: 100 # limit size during setup
+
+preprocessing:
+  target_size:
+    height: 384
+    width: 384
+  normalization:
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+  augmentations:
+    enable: true
+    rotation_limit: 10
+    brightness_contrast: true
+  train_val_split: 0.8
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+
+frontend:
+  host: "0.0.0.0"
+  port: 8501

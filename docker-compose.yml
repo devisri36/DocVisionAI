@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: backend
+    container_name: docvision_backend
+    volumes:
+      - .:/app
+      - docvision_logs:/app/logs
+      - docvision_outputs:/app/outputs
+      - docvision_models:/app/models
+    ports:
+      - "8000:8000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+      - LOG_LEVEL=INFO
+      - LOG_FILE_PATH=logs/docvision.log
+    # Enable GPU support in container (falls back to CPU if drivers are unavailable)
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: frontend
+    container_name: docvision_frontend
+    volumes:
+      - .:/app
+      - docvision_outputs:/app/outputs
+    ports:
+      - "8501:8501"
+    environment:
+      - STREAMLIT_PORT=8501
+    # Only starts the frontend when backend healthcheck reports healthy
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  docvision_logs:
+  docvision_outputs:
+  docvision_models:
